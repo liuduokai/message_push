@@ -11,8 +11,8 @@ log_file_name = str(ticks)+'logging.info'
 logging.basicConfig(filename=log_file_name, level=logging.INFO, format='%(asctime)s %(levelname)s  %(message)s %(pathname)s')
 
 try:
-    itchat.auto_login(enableCmdQR=2,hotReload=True)
-    # itchat.auto_login()
+    # itchat.auto_login(enableCmdQR=2,hotReload=True)
+    itchat.auto_login()
 except:
     logging.error('wechat login fail')
 else:
