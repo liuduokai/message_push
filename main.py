@@ -2,19 +2,34 @@ import itchat
 import pika
 import json
 import threading
+import logging
 
-#itchat.auto_login(enableCmdQR=2,hotReload=True)
-itchat.auto_login()
+
+
+logging.basicConfig(filename='logging.info', level=logging.INFO, format='%(asctime)s %(levelname)s %(pathname)s  %(message)s')
+
+try:
+    itchat.auto_login(enableCmdQR=2,hotReload=True)
+    # itchat.auto_login()
+except:
+    logging.error('wechat login fail')
+else:
+    logging.info('wechat login success')
+
 try:
     auth = pika.PlainCredentials('qwer', '1234')
     connection = pika.BlockingConnection(pika.ConnectionParameters('111.230.223.227', 5672, '/', auth))
     channel = connection.channel()
     channel.queue_declare(queue='hello')
 except:
-    print('connect rabbitmq fail')
+    # print('connect rabbitmq fail')
+    logging.error('connect rabbitmq fail')
+else:
+    logging.info('connect rabbitmq success')
 
 def fun():
     itchat.send('hello world', toUserName='filehelper')
+    logging.info('send hello world to filehelper')
     timer = threading.Timer(30, fun)
     timer.start()
 
@@ -35,9 +50,12 @@ def callback(ch, method, properties, body):
         try:
             itchat.send(message, toUserName=u_id)
         except:
-            print('message send fail')
+            # print('message send fail')
+            logging.error('message send fail')
         else:
-            print('send to:', user_name, '    with message:', message)
+            output = 'send to:' + user_name + '    with message:' + message
+            logging.info(output)
+            # print('send to:', user_name, '    with message:', message)
 
 
 channel.basic_consume(callback,
