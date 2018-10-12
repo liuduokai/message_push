@@ -1,3 +1,0 @@
-INFO D:\anaconda\envs\ichat_learn\lib\site-packages\pika\adapters\base_connection.py 2018-10-12 15:09:33,807 Pika version 0.12.0 connecting to 111.230.223.227:5672
-INFO D:\anaconda\envs\ichat_learn\lib\site-packages\pika\adapters\blocking_connection.py 2018-10-12 15:09:33,905 Created channel=1
-INFO F:/python_project/ichat_learn/main.py 2018-10-12 15:09:33,945 connect rabbitmq success

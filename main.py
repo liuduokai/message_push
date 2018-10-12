@@ -3,10 +3,12 @@ import pika
 import json
 import threading
 import logging
+import time
 
 
-
-logging.basicConfig(filename='logging.info', level=logging.INFO, format='%(asctime)s %(levelname)s %(pathname)s  %(message)s')
+ticks = time.time()
+log_file_name = str(ticks)+'logging.info'
+logging.basicConfig(filename=log_file_name, level=logging.INFO, format='%(asctime)s %(levelname)s  %(message)s %(pathname)s')
 
 try:
     itchat.auto_login(enableCmdQR=2,hotReload=True)
