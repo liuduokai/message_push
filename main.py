@@ -1,9 +1,10 @@
 import itchat
 import pika
 import json
+import threading
 
-itchat.auto_login(enableCmdQR=2,hotReload=True)
-# itchat.auto_login()
+#itchat.auto_login(enableCmdQR=2,hotReload=True)
+itchat.auto_login()
 try:
     auth = pika.PlainCredentials('qwer', '1234')
     connection = pika.BlockingConnection(pika.ConnectionParameters('111.230.223.227', 5672, '/', auth))
@@ -11,6 +12,15 @@ try:
     channel.queue_declare(queue='hello')
 except:
     print('connect rabbitmq fail')
+
+def fun():
+    itchat.send('hello world', toUserName='filehelper')
+    timer = threading.Timer(30, fun)
+    timer.start()
+
+
+timer = threading.Timer(30,fun)
+timer.start()
 
 
 def callback(ch, method, properties, body):
@@ -35,3 +45,4 @@ channel.basic_consume(callback,
                       no_ack=True)
 
 channel.start_consuming()
+
